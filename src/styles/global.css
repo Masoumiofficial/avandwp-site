@@ -551,3 +551,59 @@ main:focus { outline: none; }
 .final-cta .btn--ghost { color: #fff; border-color: rgba(255, 255, 255, 0.5); }
 .final-cta .btn--ghost:hover { border-color: #fff; color: #fff; }
 .final-cta .btn[aria-disabled='true'] { opacity: 0.7; }
+
+/* ---------- 3D mode (Vascular3D) ---------- */
+.hero__visual { position: relative; width: 100%; }
+.view-toggle { display: flex; gap: 4px; width: max-content; margin: 0 auto 12px; padding: 4px; border-radius: 999px; border: 1px solid rgba(148, 163, 184, 0.25); background: rgba(15, 23, 42, 0.45); }
+[data-theme='light'] .view-toggle { background: #ffffff; border-color: #cbd5e1; }
+.view-toggle__btn {
+  display: inline-flex; align-items: center; gap: 6px; min-height: 44px; padding: 0 14px; border: 0; border-radius: 999px;
+  background: transparent; color: var(--text-on-dark-muted); font: inherit; font-size: 0.85rem; cursor: pointer;
+}
+.view-toggle__btn[aria-pressed='true'] { background: var(--avand-primary); color: #ffffff; }
+[data-theme='light'] .view-toggle__btn { color: var(--text-muted); }
+[data-theme='light'] .view-toggle__btn[aria-pressed='true'] { color: #ffffff; }
+.view-toggle__btn:focus-visible { outline: 2px solid var(--avand-accent-soft); outline-offset: 2px; }
+
+.vascular--3d { aspect-ratio: auto; }
+.v3d { position: relative; width: 100%; aspect-ratio: 1; min-height: 320px; overflow: hidden; touch-action: pan-y; }
+.v3d__canvas { position: absolute; inset: 0; width: 100% !important; height: 100% !important; display: block; }
+.v3d__label {
+  position: absolute; left: 0; top: 0; white-space: nowrap; pointer-events: auto; cursor: pointer;
+  display: inline-flex; flex-direction: column; align-items: center; gap: 2px; min-height: 44px; min-width: 44px;
+  padding: 8px 12px; border-radius: 12px; border: 1px solid rgba(148, 163, 184, 0.35);
+  background: rgba(15, 23, 42, 0.78); color: #e2e8f0; font: inherit; font-size: 0.8rem; font-weight: 600;
+  backdrop-filter: blur(6px); transition: border-color 0.2s, box-shadow 0.2s; will-change: transform;
+}
+.v3d__label small { font-family: var(--font-mono); font-size: 0.65rem; font-weight: 400; color: #94a3b8; direction: ltr; }
+.v3d__label:hover, .v3d__label:focus-visible { border-color: var(--avand-accent-soft); box-shadow: 0 0 0 3px rgba(45, 212, 191, 0.2); outline: none; }
+.v3d__label--core { margin-top: 84px; cursor: default; pointer-events: none; border-color: rgba(96, 165, 250, 0.5); color: #bfdbfe; }
+[data-theme='light'] .v3d__label { background: rgba(255, 255, 255, 0.92); color: #0f172a; border-color: #cbd5e1; }
+[data-theme='light'] .v3d__label small { color: #475569; }
+[data-theme='light'] .v3d__label--core { color: #1e3a8a; }
+@media (max-width: 640px) { .v3d__label { font-size: 0.72rem; padding: 6px 10px; } }
+
+/* ---------- CSS 3D tilt (pointer devices only; hook disables it otherwise) ---------- */
+.tilt {
+  --tilt-x: 0deg; --tilt-y: 0deg;
+  transform-style: preserve-3d;
+  transform: perspective(900px) rotateX(var(--tilt-x)) rotateY(var(--tilt-y));
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+  will-change: transform;
+}
+.tilt:hover { box-shadow: 0 18px 40px -18px rgba(37, 99, 235, 0.45); }
+@media (hover: none), (prefers-reduced-motion: reduce) {
+  .tilt { transform: none !important; transition: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .v3d__label, .view-toggle__btn { transition: none; }
+}
+
+/* ---------- Narrow header fix (≤480px): keep actions inside the viewport ---------- */
+@media (max-width: 480px) {
+  .site-header__inner { gap: 8px; }
+  .brand { flex: 1 1 auto; min-width: 0; }
+  .brand__name { font-size: 0.92rem; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+  .brand .badge { display: none; }
+  .header-actions { flex: none; gap: 6px; }
+}

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { WORKSPACES } from '../data/content';
 import { SectionHead } from './SectionHead';
+import { useTilt } from '../hooks/useTilt';
 
 // Illustrative mockup content. Values are sample data, not live metrics.
 type MockSpec = {
@@ -75,6 +76,7 @@ export function WorkspaceShowcase() {
   const ws = WORKSPACES[index];
   const mock = MOCKS[ws.id];
   const sideItems = ['پیشخوان', 'محتوا', 'ووکامرس', 'چت‌بات', 'تلگرام', 'تنظیمات'];
+  const tilt = useTilt<HTMLDivElement>(4);
 
   return (
     <section className="section" id="workspaces" aria-labelledby="ws-title" style={{ background: 'var(--avand-bg-light)' }}>
@@ -101,7 +103,14 @@ export function WorkspaceShowcase() {
             <p className="ws__desc" role="tabpanel">{ws.desc}</p>
           </div>
 
-          <div className="mock" role="img" aria-label={`موکاپ ${ws.title}`}>
+          <div
+            ref={tilt.ref}
+            className="mock tilt"
+            role="img"
+            aria-label={`موکاپ ${ws.title}`}
+            onPointerMove={tilt.onPointerMove}
+            onPointerLeave={tilt.onPointerLeave}
+          >
             <div className="mock__bar">
               <i /><i /><i />
               <span>/wp-admin/admin.php?page=avandwp-{ws.id}</span>

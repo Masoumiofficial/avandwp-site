@@ -1,7 +1,10 @@
-import { useEffect, useState } from 'react';
-import { Play } from '@phosphor-icons/react';
+import { lazy, Suspense, useEffect, useState } from 'react';
+import { Play, CubeFocus, GraphIcon } from '@phosphor-icons/react';
 import { HERO_NODES, HERO_STATS, LINKS, PRODUCT } from '../data/content';
 import { Logo } from './Logo';
+
+// Three.js is code-split so the first paint and the 2D fallback stay light.
+const Vascular3D = lazy(() => import('./Vascular3D').then((m) => ({ default: m.Vascular3D })));
 
 // Node positions in percent of the diagram box, derived from each node's angle.
 const RADIUS = 36;
@@ -10,7 +13,7 @@ function nodePos(angle: number) {
   return { x: 50 + RADIUS * Math.cos(rad), y: 50 + RADIUS * Math.sin(rad) };
 }
 
-function VascularDiagram() {
+export function VascularDiagram() {
   const [active, setActive] = useState(0);
 
   useEffect(() => {
@@ -69,6 +72,8 @@ function VascularDiagram() {
 }
 
 export function Hero() {
+  const [view, setView] = useState<'3d' | '2d'>('3d');
+
   return (
     <section className="hero" id="top">
       <div className="container hero__grid">
@@ -99,7 +104,33 @@ export function Hero() {
             ))}
           </div>
         </div>
-        <VascularDiagram />
+        <div className="hero__visual">
+          <div className="view-toggle" role="group" aria-label="انتخاب نمای نمودار">
+            <button
+              type="button"
+              className="view-toggle__btn"
+              aria-pressed={view === '3d'}
+              onClick={() => setView('3d')}
+            >
+              <CubeFocus size={16} aria-hidden="true" /> نمای سه‌بعدی
+            </button>
+            <button
+              type="button"
+              className="view-toggle__btn"
+              aria-pressed={view === '2d'}
+              onClick={() => setView('2d')}
+            >
+              <GraphIcon size={16} aria-hidden="true" /> نمای دوبعدی
+            </button>
+          </div>
+          {view === '3d' ? (
+            <Suspense fallback={<VascularDiagram />}>
+              <Vascular3D fallback={<VascularDiagram />} />
+            </Suspense>
+          ) : (
+            <VascularDiagram />
+          )}
+        </div>
       </div>
     </section>
   );

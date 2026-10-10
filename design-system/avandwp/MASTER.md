@@ -260,3 +260,18 @@ Before delivering any UI code, verify:
 - [ ] Responsive: 375px, 768px, 1024px, 1440px
 - [ ] No content hidden behind fixed navbars
 - [ ] No horizontal scroll on mobile
+
+---
+
+## Project Overrides (AvandWP landing)
+
+These overrides take precedence over the generated defaults above. They were chosen to satisfy the product brief.
+
+- **Palette and fonts:** the brief's color tokens and fonts win. Orange CTA `#EA580C` and Noto Sans Hebrew/Arabic are not used. Font stack is Vazirmatn (UI, RTL) plus JetBrains Mono (technical names).
+- **Themes:** dark is the default. A light theme («تم روشن») is available through the header toggle and saved in `localStorage`.
+- **Icons:** `@phosphor-icons/react`. Emoji are not used as icons.
+- **Accessibility:** 44px minimum touch targets, visible focus rings, skip link to `#main`, focusable error summaries in forms, contrast at least 4.5:1, and `prefers-reduced-motion` respected.
+- **3D mode (hero):** Three.js scene (`src/components/Vascular3D.tsx`), lazy-loaded. Uses explicit disposal, Points particles, pixel ratio capped at 1.75, pointer and touch input, pause when off-screen, and a static frame under reduced motion. Falls back to the 2D `VascularDiagram` when WebGL is unavailable. Node labels link to their sections.
+- **Card tilt:** `useTilt` hook (`src/hooks/useTilt.ts`) on pillar cards and the workspace mock. Disabled for touch, `hover: none`, and reduced motion.
+- **Honesty:** the simulator, chat console, and ticket form are scripted demos and are labelled as such. Mockups use sample data.
+- **Dials:** variance 4, motion 3, density 5.

@@ -1,5 +1,21 @@
 import { PILLARS } from '../data/content';
 import { SectionHead } from './SectionHead';
+import { useTilt } from '../hooks/useTilt';
+
+function PillarCard({ p }: { p: (typeof PILLARS)[number] }) {
+  const tilt = useTilt<HTMLElement>(5);
+  return (
+    <article ref={tilt.ref} className="card pillar tilt" onPointerMove={tilt.onPointerMove} onPointerLeave={tilt.onPointerLeave}>
+      <div className="pillar__key">{p.key}</div>
+      <h3>{p.title}</h3>
+      <ul>
+        {p.items.map((i) => (
+          <li key={i}>{i}</li>
+        ))}
+      </ul>
+    </article>
+  );
+}
 
 export function Pillars() {
   return (
@@ -12,15 +28,7 @@ export function Pillars() {
         />
         <div className="pillars">
           {PILLARS.map((p) => (
-            <article key={p.key} className="card pillar">
-              <div className="pillar__key">{p.key}</div>
-              <h3>{p.title}</h3>
-              <ul>
-                {p.items.map((i) => (
-                  <li key={i}>{i}</li>
-                ))}
-              </ul>
-            </article>
+            <PillarCard key={p.key} p={p} />
           ))}
         </div>
       </div>
