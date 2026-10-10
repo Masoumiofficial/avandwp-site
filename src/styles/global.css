@@ -207,22 +207,17 @@ code, .mono { font-family: var(--font-mono); direction: ltr; unicode-bidi: isola
 .stat__note { color: var(--text-on-dark-muted); font-size: 0.78rem; line-height: 1.6; }
 
 .vascular { position: relative; width: 100%; max-width: 520px; margin-inline: auto; aspect-ratio: 1; }
-.vascular svg { width: 100%; height: 100%; overflow: visible; }
-.vascular__core { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); text-align: center; }
-.vascular__node {
-  position: absolute; transform: translate(-50%, -50%); background: var(--c-surface-dark); border: 1px solid var(--c-border-dark);
-  border-radius: 12px; padding: 10px 14px; font-size: 0.82rem; color: var(--c-title-dark); text-align: center; min-width: 120px; line-height: 1.5;
-  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.6);
-}
-.vascular__node small { display: block; color: var(--text-on-dark-muted); font-size: 0.7rem; font-family: var(--font-mono); direction: ltr; }
-.vascular__node.is-active { border-color: var(--avand-accent-soft); box-shadow: 0 0 0 3px rgba(45, 212, 191, 0.15), 0 10px 30px -10px rgba(45, 212, 191, 0.35); }
+
+
+
+
+
 .vascular__caption { text-align: center; color: var(--text-on-dark-muted); font-size: 0.8rem; margin-top: 12px; }
 .core-hex { width: 118px; height: 118px; filter: drop-shadow(0 0 24px rgba(37, 99, 235, 0.45)); }
 .core-label { font-weight: 800; color: var(--c-title-dark); font-size: 0.95rem; margin-top: 4px; }
 .pulse { animation: pulse 2.6s ease-in-out infinite; transform-origin: center; transform-box: fill-box; }
-.flow { stroke-dasharray: 6 10; animation: flow 1.6s linear infinite; }
+
 @keyframes pulse { 0%, 100% { opacity: 0.55; } 50% { opacity: 1; } }
-@keyframes flow { to { stroke-dashoffset: -32; } }
 
 /* ---------- Brand story ---------- */
 .story { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: 40px; align-items: center; }
@@ -496,7 +491,6 @@ table.compare tr:last-child td { border-bottom: 0; }
 [data-theme='light'] .sim__disclaimer { background: var(--c-warn-bg); border-color: rgba(180, 83, 9, 0.35); }
 [data-theme='light'] .hero__badge .badge { background: #fff; }
 [data-theme='light'] .stat { background: #fff; box-shadow: var(--shadow-card); }
-[data-theme='light'] .vascular__node { box-shadow: var(--shadow-card); }
 [data-theme='light'] .section--dark .card--dark, [data-theme='light'] .card--dark { box-shadow: var(--shadow-card); }
 [data-theme='light'] .sim__panel, [data-theme='light'] .faq details { box-shadow: var(--shadow-card); }
 [data-theme='light'] .chat__head { border-bottom: 1px solid #e2e8f0; }
@@ -553,17 +547,8 @@ main:focus { outline: none; }
 .final-cta .btn[aria-disabled='true'] { opacity: 0.7; }
 
 /* ---------- 3D mode (Vascular3D) ---------- */
+.hero__fallback { display: grid; place-items: center; min-height: 320px; }
 .hero__visual { position: relative; width: 100%; }
-.view-toggle { display: flex; gap: 4px; width: max-content; margin: 0 auto 12px; padding: 4px; border-radius: 999px; border: 1px solid rgba(148, 163, 184, 0.25); background: rgba(15, 23, 42, 0.45); }
-[data-theme='light'] .view-toggle { background: #ffffff; border-color: #cbd5e1; }
-.view-toggle__btn {
-  display: inline-flex; align-items: center; gap: 6px; min-height: 44px; padding: 0 14px; border: 0; border-radius: 999px;
-  background: transparent; color: var(--text-on-dark-muted); font: inherit; font-size: 0.85rem; cursor: pointer;
-}
-.view-toggle__btn[aria-pressed='true'] { background: var(--avand-primary); color: #ffffff; }
-[data-theme='light'] .view-toggle__btn { color: var(--text-muted); }
-[data-theme='light'] .view-toggle__btn[aria-pressed='true'] { color: #ffffff; }
-.view-toggle__btn:focus-visible { outline: 2px solid var(--avand-accent-soft); outline-offset: 2px; }
 
 .vascular--3d { aspect-ratio: auto; }
 .v3d { position: relative; width: 100%; aspect-ratio: 1; min-height: 320px; overflow: hidden; touch-action: pan-y; }
@@ -596,7 +581,7 @@ main:focus { outline: none; }
   .tilt { transform: none !important; transition: none; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .v3d__label, .view-toggle__btn { transition: none; }
+  .v3d__label { transition: none; }
 }
 
 /* ---------- Narrow header fix (≤480px): keep actions inside the viewport ---------- */
@@ -614,9 +599,10 @@ main:focus { outline: none; }
 .site-scene {
   position: fixed; inset: 0; width: 100vw; height: 100vh; z-index: -1; pointer-events: none; display: block;
 }
-.section--tint { background: color-mix(in srgb, var(--avand-bg-light) 80%, transparent); }
-.section--dark { background: color-mix(in srgb, var(--c-bg-dark) 80%, transparent); }
-.section--white { background: color-mix(in srgb, var(--avand-surface-light) 82%, transparent); }
+.section--tint { background: color-mix(in srgb, var(--avand-bg-light) 90%, transparent); }
+.section--dark { background: color-mix(in srgb, var(--c-bg-dark) 85%, transparent); }
+[data-theme='dark'] body { background: var(--c-bg-dark); }
+.section--white { background: color-mix(in srgb, var(--avand-surface-light) 90%, transparent); }
 .hero { background: radial-gradient(1000px 500px at 80% -10%, var(--c-hero-glow), transparent 60%),
     radial-gradient(800px 500px at 0% 110%, var(--c-hero-glow-2), transparent 60%),
     color-mix(in srgb, var(--c-bg-dark) 60%, transparent) !important; }

@@ -4,7 +4,7 @@ import { SectionHead } from './SectionHead';
 
 export function Comparison() {
   return (
-    <section className="section section--white" id="compare" aria-labelledby="compare-title">
+    <section className="section section--white" id="compare" data-scene="tiers" aria-labelledby="compare-title">
       <div className="container">
         <SectionHead
           eyebrow="BEFORE / AFTER"

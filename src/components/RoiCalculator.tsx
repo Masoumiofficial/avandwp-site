@@ -42,7 +42,7 @@ export function RoiCalculator() {
   }, [v]);
 
   return (
-    <section className="section section--tint" id="roi" aria-labelledby="roi-title">
+    <section className="section section--tint" id="roi" data-scene="growth" aria-labelledby="roi-title">
       <div className="container">
         <SectionHead
           eyebrow="VALUE CALCULATOR"

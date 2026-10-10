@@ -420,7 +420,7 @@ export function Vascular3D({ fallback }: Props) {
         </div>
       </div>
       <figcaption id="v3d-caption" className="vascular__caption">
-        هسته‌ی سه‌بعدی AvandWP؛ روی هر گره کلیک کنید تا به بخش مربوط بروید. در صورت نبود WebGL، نمای دوبعدی نمایش داده می‌شود.
+        هسته‌ی سه‌بعدی AvandWP؛ روی هر گره کلیک کنید تا به بخش مربوط بروید. در صورت نبود WebGL، نشان ثابت AvandWP نمایش داده می‌شود.
       </figcaption>
     </figure>
   );

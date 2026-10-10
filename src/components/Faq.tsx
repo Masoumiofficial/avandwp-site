@@ -3,7 +3,7 @@ import { SectionHead } from './SectionHead';
 
 export function Faq() {
   return (
-    <section className="section section--dark" id="faq" aria-labelledby="faq-title">
+    <section className="section section--dark" id="faq" data-scene="bubbles" aria-labelledby="faq-title">
       <div className="container">
         <SectionHead eyebrow="FAQ" title="سؤالات متداول" lead="پاسخ‌های کوتاه و صادقانه به پرسش‌هایی که بیشتر پرسیده می‌شوند." />
         <div className="faq">

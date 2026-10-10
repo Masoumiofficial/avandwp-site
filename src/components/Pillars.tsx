@@ -19,7 +19,7 @@ function PillarCard({ p }: { p: (typeof PILLARS)[number] }) {
 
 export function Pillars() {
   return (
-    <section className="section section--tint" id="pillars" aria-labelledby="pillars-title">
+    <section className="section section--tint" id="pillars" data-scene="towers" aria-labelledby="pillars-title">
       <div className="container">
         <SectionHead
           eyebrow="FOUR PILLARS"

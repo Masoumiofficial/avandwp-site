@@ -34,7 +34,7 @@ export function WorkflowSimulator() {
   const done = phase >= total;
 
   return (
-    <section className="section section--dark" id="demo" aria-labelledby="demo-title">
+    <section className="section section--dark" id="demo" data-scene="pipeline" aria-labelledby="demo-title">
       <div className="container">
         <SectionHead
           eyebrow="INTERACTIVE SIMULATOR"

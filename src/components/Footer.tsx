@@ -5,7 +5,7 @@ import { Logo } from './Logo';
 export function Footer() {
   const downloadReady = Boolean(LINKS.downloadUrl);
   return (
-    <footer className="site-footer">
+    <footer className="site-footer" data-scene="network">
       <div className="container">
         <div className="foot-grid">
           <div>

@@ -153,7 +153,7 @@ export function ChatConsole() {
   const errorFor = (field: TicketField) => ticketErrors.find((er) => er.field === field);
 
   return (
-    <section className="section chat-section" id="chat" aria-labelledby="chat-title">
+    <section className="section chat-section" id="chat" data-scene="bubbles" aria-labelledby="chat-title">
       <div className="container">
         <SectionHead
           eyebrow="[avandwp_chat] · LIVE PREVIEW"

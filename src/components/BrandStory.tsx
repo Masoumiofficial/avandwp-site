@@ -5,7 +5,7 @@ import { SectionHead } from './SectionHead';
 export function BrandStory() {
   const [lead, ...rest] = BRAND_STORY.paragraphs;
   return (
-    <section className="section section--white" id="story" aria-labelledby="story-title">
+    <section className="section section--white" id="story" data-scene="network" aria-labelledby="story-title">
       <div className="container">
         <SectionHead eyebrow="BRAND STORY" title={BRAND_STORY.title} lead={`${PRODUCT.nameFa} (${PRODUCT.nameEn}) — استعاره «شبکه آوندی»`} />
         <div className="story">

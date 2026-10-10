@@ -5,7 +5,7 @@ import { LINKS, PRODUCT } from '../data/content';
 export function FinalCta() {
   const downloadReady = Boolean(LINKS.downloadUrl);
   return (
-    <section className="final-cta" aria-labelledby="cta-title">
+    <section className="final-cta" data-scene="burst" aria-labelledby="cta-title">
       <div className="container final-cta__inner">
         <div>
           <h2 id="cta-title">{PRODUCT.taglineFa}</h2>

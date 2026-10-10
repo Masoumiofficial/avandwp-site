@@ -9,7 +9,7 @@ export function Roadmap() {
     { cls: 'road__col--later', icon: PushPin, data: ROADMAP.later },
   ];
   return (
-    <section className="section section--white" id="roadmap" aria-labelledby="road-title">
+    <section className="section section--white" id="roadmap" data-scene="orbit" aria-labelledby="road-title">
       <div className="container">
         <SectionHead
           eyebrow="ENGINEERING ROADMAP"

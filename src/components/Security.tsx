@@ -6,7 +6,7 @@ const ICONS: Icon[] = [LockKey, ShareNetwork, ShieldCheck, Broom];
 
 export function Security() {
   return (
-    <section className="section section--dark" id="security" aria-labelledby="sec-title">
+    <section className="section section--dark" id="security" data-scene="lattice" aria-labelledby="sec-title">
       <div className="container">
         <SectionHead
           eyebrow="SECURITY & ARCHITECTURE"

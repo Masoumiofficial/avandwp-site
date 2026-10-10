@@ -3,7 +3,7 @@ import { SectionHead } from './SectionHead';
 
 export function Setup() {
   return (
-    <section className="section section--white" id="setup" aria-labelledby="setup-title">
+    <section className="section section--white" id="setup" data-scene="path" aria-labelledby="setup-title">
       <div className="container">
         <SectionHead eyebrow="QUICK START" title="راه‌اندازی در ۳ مرحله" lead="از نصب تا اولین پیش‌نویس، با سه گام ساده." />
         <ol className="steps" style={{ listStyle: 'none', padding: 0, margin: 0 }}>
