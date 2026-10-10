@@ -1,0 +1,37 @@
+import { PILLARS } from '../data/content';
+import { SectionHead } from './SectionHead';
+import { useTilt } from '../hooks/useTilt';
+
+function PillarCard({ p }: { p: (typeof PILLARS)[number] }) {
+  const tilt = useTilt<HTMLElement>(5);
+  return (
+    <article ref={tilt.ref} className="card pillar tilt" onPointerMove={tilt.onPointerMove} onPointerLeave={tilt.onPointerLeave}>
+      <div className="pillar__key">{p.key}</div>
+      <h3>{p.title}</h3>
+      <ul>
+        {p.items.map((i) => (
+          <li key={i}>{i}</li>
+        ))}
+      </ul>
+    </article>
+  );
+}
+
+export function Pillars() {
+  return (
+    <section className="section section--tint" id="pillars" data-scene="towers" aria-labelledby="pillars-title">
+      <div className="container">
+        <SectionHead
+          eyebrow="FOUR PILLARS"
+          title="معماری ۴ ستونه محصول"
+          lead="هر ستون یک جریان کاری مشخص را پوشش می‌دهد و همه‌ی آن‌ها روی یک هسته‌ی مشترک وردپرس اجرا می‌شوند."
+        />
+        <div className="pillars">
+          {PILLARS.map((p) => (
+            <PillarCard key={p.key} p={p} />
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
