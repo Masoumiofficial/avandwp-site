@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { SCENARIOS, SIMULATOR_DISCLAIMER } from '../data/content';
+import { ArrowClockwise, Play } from '@phosphor-icons/react';
 import { SectionHead } from './SectionHead';
 
 const STEP_MS = 950;
@@ -90,7 +91,13 @@ export function WorkflowSimulator() {
 
             <div className="sim__controls">
               <button type="button" className="btn btn--primary btn--sm" onClick={run} disabled={running}>
-                {running ? 'در حال اجرا…' : done ? '↻ اجرای دوباره' : '▶ اجرای شبیه‌سازی'}
+                {running ? (
+                  'در حال اجرا…'
+                ) : done ? (
+                  <><ArrowClockwise size={16} aria-hidden="true" /> اجرای دوباره</>
+                ) : (
+                  <><Play size={16} weight="fill" aria-hidden="true" /> اجرای شبیه‌سازی</>
+                )}
               </button>
               {(phase > 0 || running) && (
                 <button type="button" className="btn btn--ghost btn--sm" onClick={() => select(index)}>

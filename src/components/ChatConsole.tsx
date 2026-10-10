@@ -1,3 +1,4 @@
+import { ChatCircleDots, LinkSimple, Microphone, Ticket, ThumbsDown, ThumbsUp } from '@phosphor-icons/react';
 import { FormEvent, useEffect, useRef, useState } from 'react';
 import { CHAT_ANSWERS, CHAT_FALLBACK, CHAT_QUESTIONS, ChatAnswer } from '../data/content';
 import { SectionHead } from './SectionHead';
@@ -26,6 +27,9 @@ type Msg = {
   feedback?: 'up' | 'down';
 };
 
+type TicketField = 'name' | 'contact' | 'message';
+type TicketError = { field: TicketField; message: string };
+
 let uid = 0;
 const nextId = () => ++uid;
 
@@ -33,6 +37,12 @@ const WELCOME: Msg = {
   id: nextId(),
   role: 'bot',
   text: 'سلام! من دستیار نمونه‌ی آوند هستم. یکی از پرسش‌های نمونه را انتخاب کنید یا با میکروفون بپرسید.',
+};
+
+const TICKET_LABELS: Record<TicketField, string> = {
+  name: 'نام',
+  contact: 'ایمیل یا شماره تماس',
+  message: 'شرح مسئله',
 };
 
 function findAnswer(question: string): ChatAnswer {
@@ -50,16 +60,23 @@ export function ChatConsole() {
   const [listening, setListening] = useState(false);
   const [micMsg, setMicMsg] = useState('');
   const [ticketSent, setTicketSent] = useState(false);
+  const [ticketErrors, setTicketErrors] = useState<TicketError[]>([]);
   const recRef = useRef<SpeechRecognitionLike | null>(null);
   const bodyRef = useRef<HTMLDivElement>(null);
+  const summaryRef = useRef<HTMLDivElement>(null);
   const timerRef = useRef<number | null>(null);
 
-  const speechSupported = typeof window !== 'undefined' &&
+  const speechSupported =
+    typeof window !== 'undefined' &&
     Boolean((window as SpeechWindow).SpeechRecognition || (window as SpeechWindow).webkitSpeechRecognition);
 
   useEffect(() => {
     bodyRef.current?.scrollTo({ top: bodyRef.current.scrollHeight, behavior: 'smooth' });
   }, [messages, thinking]);
+
+  useEffect(() => {
+    if (ticketErrors.length) summaryRef.current?.focus();
+  }, [ticketErrors]);
 
   useEffect(
     () => () => {
@@ -77,10 +94,7 @@ export function ChatConsole() {
     setThinking(true);
     timerRef.current = window.setTimeout(() => {
       const a = findAnswer(q);
-      setMessages((m) => [
-        ...m,
-        { id: nextId(), role: 'bot', text: a.answer, sources: a.sources },
-      ]);
+      setMessages((m) => [...m, { id: nextId(), role: 'bot', text: a.answer, sources: a.sources }]);
       setThinking(false);
     }, 700);
   };
@@ -126,11 +140,20 @@ export function ChatConsole() {
 
   const submitTicket = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setTicketSent(true);
+    const data = new FormData(e.currentTarget);
+    const errors: TicketError[] = [];
+    (['name', 'contact', 'message'] as TicketField[]).forEach((field) => {
+      const value = String(data.get(field) ?? '').trim();
+      if (!value) errors.push({ field, message: `«${TICKET_LABELS[field]}» را وارد کنید.` });
+    });
+    setTicketErrors(errors);
+    if (errors.length === 0) setTicketSent(true);
   };
 
+  const errorFor = (field: TicketField) => ticketErrors.find((er) => er.field === field);
+
   return (
-    <section className="section" id="chat" aria-labelledby="chat-title" style={{ background: 'var(--avand-bg-light)' }}>
+    <section className="section chat-section" id="chat" aria-labelledby="chat-title">
       <div className="container">
         <SectionHead
           eyebrow="[avandwp_chat] · LIVE PREVIEW"
@@ -141,9 +164,11 @@ export function ChatConsole() {
           <aside className="chat-side">
             <h3>آنچه این پیش‌نمایش نشان می‌دهد</h3>
             <ul>
-              <li>پرسش‌های نمونه را بزنید یا با میکروفون مرورگر (<span className="ltr">fa-IR</span>) بپرسید.</li>
+              <li>
+                پرسش‌های نمونه را بزنید یا با میکروفون مرورگر (<span className="ltr">fa-IR</span>) بپرسید.
+              </li>
               <li>پاسخ‌ها همراه با باکس «منابع رسمی از سایت شما» نمایش داده می‌شوند.</li>
-              <li>با دکمه‌های 👍 و 👎 بازخورد بدهید.</li>
+              <li>با دکمه‌های «مفید بود» و «نیاز به بهبود» بازخورد بدهید.</li>
               <li>اگر پاسخ کافی نبود، تیکت برای کارشناس انسانی ثبت کنید.</li>
             </ul>
             {!speechSupported && (
@@ -162,23 +187,25 @@ export function ChatConsole() {
               <span className="badge badge--stable">پاسخ نمونه</span>
             </div>
             <div className="chat__tabs" role="tablist" aria-label="حالت ویجت">
-              <button type="button" role="tab" aria-selected={tab === 'chat'} onClick={() => setTab('chat')}>
-                💬 گفت‌وگو
+              <button type="button" role="tab" id="tab-chat" aria-selected={tab === 'chat'} aria-controls="panel-chat" onClick={() => setTab('chat')}>
+                <ChatCircleDots size={18} aria-hidden="true" /> گفت‌وگو
               </button>
-              <button type="button" role="tab" aria-selected={tab === 'ticket'} onClick={() => setTab('ticket')}>
-                🎫 ثبت تیکت برای کارشناس انسانی
+              <button type="button" role="tab" id="tab-ticket" aria-selected={tab === 'ticket'} aria-controls="panel-ticket" onClick={() => setTab('ticket')}>
+                <Ticket size={18} aria-hidden="true" /> ثبت تیکت برای کارشناس
               </button>
             </div>
 
             {tab === 'chat' ? (
-              <>
+              <div id="panel-chat" role="tabpanel" aria-labelledby="tab-chat">
                 <div className="chat__body" ref={bodyRef} aria-live="polite">
                   {messages.map((m) => (
                     <div key={m.id} className={`msg msg--${m.role}`}>
                       {m.text}
                       {m.sources && m.sources.length > 0 && (
                         <div className="msg__sources">
-                          <strong>🔗 منابع رسمی از سایت شما</strong>
+                          <strong>
+                            <LinkSimple size={16} aria-hidden="true" /> منابع رسمی از سایت شما
+                          </strong>
                           <ul>
                             {m.sources.map((s) => (
                               <li key={s}>{s}</li>
@@ -189,16 +216,21 @@ export function ChatConsole() {
                       {m.role === 'bot' && m.id !== WELCOME.id && (
                         <div className="msg__feedback" role="group" aria-label="بازخورد پاسخ">
                           <button type="button" aria-pressed={m.feedback === 'up'} onClick={() => setFeedback(m.id, 'up')}>
-                            👍 مفید بود
+                            <ThumbsUp size={16} aria-hidden="true" /> مفید بود
                           </button>
                           <button type="button" aria-pressed={m.feedback === 'down'} onClick={() => setFeedback(m.id, 'down')}>
-                            👎 نیاز به بهبود
+                            <ThumbsDown size={16} aria-hidden="true" /> نیاز به بهبود
                           </button>
                         </div>
                       )}
                     </div>
                   ))}
-                  {thinking && <div className="msg msg--bot" aria-label="در حال پاسخ">…</div>}
+                  {thinking && (
+                    <div className="msg msg--bot" role="status">
+                      <span className="sr-only">در حال پاسخ</span>
+                      <span aria-hidden="true">…</span>
+                    </div>
+                  )}
                 </div>
 
                 <div className="chat__suggest">
@@ -229,37 +261,79 @@ export function ChatConsole() {
                     disabled={!speechSupported}
                     title={speechSupported ? 'پرسش صوتی (fa-IR)' : 'مرورگر پشتیبانی نمی‌کند'}
                   >
-                    🎙
+                    <Microphone size={20} aria-hidden="true" />
                   </button>
                   <button type="submit" className="send" disabled={!input.trim() || thinking}>
                     ارسال
                   </button>
                 </form>
-                <p className="chat__hint">{micMsg || (listening ? 'در حال شنیدن… بعد از پایان جمله، پاسخ داده می‌شود.' : 'پاسخ‌ها نمونه‌ی ثابت‌اند و هیچ درخواستی به سرویس AI ارسال نمی‌شود.')}</p>
-              </>
+                <p className="chat__hint" aria-live="polite">
+                  {micMsg || (listening ? 'در حال شنیدن… بعد از پایان جمله، پاسخ داده می‌شود.' : 'پاسخ‌ها نمونه‌ی ثابت‌اند و هیچ درخواستی به سرویس AI ارسال نمی‌شود.')}
+                </p>
+              </div>
             ) : ticketSent ? (
-              <div className="ticket">
+              <div id="panel-ticket" role="tabpanel" aria-labelledby="tab-ticket" className="ticket">
                 <div className="ticket__ok" role="status">
                   تیکت نمایشی ثبت شد. در نسخه واقعی، این تیکت در صندوق کارشناس ذخیره و اعلان تلگرام ارسال می‌شود.
                 </div>
-                <button type="button" className="btn btn--light btn--sm" onClick={() => setTicketSent(false)}>
+                <button
+                  type="button"
+                  className="btn btn--light btn--sm"
+                  style={{ justifySelf: 'start' }}
+                  onClick={() => {
+                    setTicketSent(false);
+                    setTicketErrors([]);
+                  }}
+                >
                   ثبت تیکت جدید
                 </button>
               </div>
             ) : (
-              <form className="ticket" onSubmit={submitTicket}>
-                <label>
-                  نام
-                  <input required name="name" placeholder="مثلاً سارا محمدی" />
-                </label>
-                <label>
-                  ایمیل یا شماره تماس
-                  <input required name="contact" placeholder="name@example.com" dir="ltr" />
-                </label>
-                <label>
-                  شرح مسئله
-                  <textarea required name="message" placeholder="مسئله خود را توضیح دهید…" />
-                </label>
+              <form id="panel-ticket" role="tabpanel" aria-labelledby="tab-ticket" className="ticket" onSubmit={submitTicket} noValidate>
+                {ticketErrors.length > 0 && (
+                  <div className="ticket__errors" role="alert" tabIndex={-1} ref={summaryRef} aria-labelledby="ticket-err-title">
+                    <strong id="ticket-err-title">فرم کامل نیست؛ موارد زیر را اصلاح کنید:</strong>
+                    <ul>
+                      {ticketErrors.map((er) => (
+                        <li key={er.field}>
+                          <a href={`#ticket-${er.field}`}>{er.message}</a>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+                {(['name', 'contact', 'message'] as TicketField[]).map((field) => {
+                  const err = errorFor(field);
+                  const id = `ticket-${field}`;
+                  const errId = `${id}-error`;
+                  const common = {
+                    id,
+                    name: field,
+                    'aria-invalid': err ? true : undefined,
+                    'aria-describedby': err ? errId : undefined,
+                  };
+                  const input =
+                    field === 'message' ? (
+                      <textarea {...common} placeholder="مسئله خود را توضیح دهید…" />
+                    ) : (
+                      <input
+                        {...common}
+                        placeholder={field === 'name' ? 'مثلاً سارا محمدی' : 'name@example.com'}
+                        dir={field === 'contact' ? 'ltr' : undefined}
+                      />
+                    );
+                  return (
+                    <div className="ticket__field" key={field}>
+                      <label htmlFor={id}>{TICKET_LABELS[field]}</label>
+                      {input}
+                      {err && (
+                        <span id={errId} className="ticket__error">
+                          {err.message}
+                        </span>
+                      )}
+                    </div>
+                  );
+                })}
                 <button type="submit" className="btn btn--primary btn--sm" style={{ justifySelf: 'start' }}>
                   ارسال تیکت (نمایشی)
                 </button>

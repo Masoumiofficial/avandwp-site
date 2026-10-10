@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { LINKS, NAV_ITEMS, PRODUCT } from '../data/content';
+import { List, X } from '@phosphor-icons/react';
 import { Logo } from './Logo';
 import { ThemeToggle } from './ThemeToggle';
 
@@ -49,7 +50,7 @@ export function Header() {
             aria-label={open ? 'بستن منو' : 'باز کردن منو'}
             onClick={() => setOpen((v) => !v)}
           >
-            {open ? '✕' : '☰'}
+            {open ? <X size={20} aria-hidden="true" /> : <List size={20} aria-hidden="true" />}
           </button>
         </div>
       </div>

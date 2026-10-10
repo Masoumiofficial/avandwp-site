@@ -1,3 +1,4 @@
+import { CheckCircle, XCircle } from '@phosphor-icons/react';
 import { COMPARE_COLUMNS, COMPARE_DISCLAIMER, COMPARE_ROWS } from '../data/content';
 import { SectionHead } from './SectionHead';
 
@@ -12,7 +13,7 @@ export function Comparison() {
         />
         <div className="before-after">
           <article className="card ba-card ba-card--before">
-            <h3>❌ قبل از آوند</h3>
+            <h3 className="ba-title"><XCircle size={22} weight="fill" aria-hidden="true" /> قبل از آوند</h3>
             <p>۱۰ ابزار پراکنده برای یک جریان کاری واحد، هر کدام با کپی و جابه‌جایی دستی.</p>
             <ul>
               <li>محدودیت تحریم و نیاز به پرداخت ارزی برای برخی سرویس‌ها</li>
@@ -21,7 +22,7 @@ export function Comparison() {
             </ul>
           </article>
           <article className="card ba-card ba-card--after">
-            <h3>✅ با آوند</h3>
+            <h3 className="ba-title"><CheckCircle size={22} weight="fill" aria-hidden="true" /> با آوند</h3>
             <p>یکپارچگی بومی درون پیشخوان وردپرس؛ یک جریان واحد از دانش سایت تا انتشار.</p>
             <ul>
               <li>صف پس‌زمینه‌ی avandwp_jobs بدون Timeout روی هاست اشتراکی</li>

@@ -2,6 +2,7 @@ import { BrandStory } from './components/BrandStory';
 import { ChatConsole } from './components/ChatConsole';
 import { Comparison } from './components/Comparison';
 import { Faq } from './components/Faq';
+import { FinalCta } from './components/FinalCta';
 import { Footer } from './components/Footer';
 import { Header } from './components/Header';
 import { Hero } from './components/Hero';
@@ -18,11 +19,11 @@ import { WorkspaceShowcase } from './components/WorkspaceShowcase';
 export default function App() {
   return (
     <>
-      <a className="sr-only" href="#demo">
+      <a className="skip-link" href="#main">
         پرش به محتوای اصلی
       </a>
       <Header />
-      <main>
+      <main id="main" tabIndex={-1}>
         <Hero />
         <BrandStory />
         <WorkflowSimulator />
@@ -36,6 +37,7 @@ export default function App() {
         <Roadmap />
         <Pricing />
         <Faq />
+        <FinalCta />
       </main>
       <Footer />
     </>

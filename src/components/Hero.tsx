@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Play } from '@phosphor-icons/react';
 import { HERO_NODES, HERO_STATS, LINKS, PRODUCT } from '../data/content';
 import { Logo } from './Logo';
 
@@ -82,7 +83,7 @@ export function Hero() {
           <p className="hero__sub">{PRODUCT.subtitleFa}</p>
           <div className="hero__ctas">
             <a className="btn btn--primary" href="#demo">
-              ▶ دموی تعاملی را ببینید
+              <Play size={16} weight="fill" aria-hidden="true" /> دموی تعاملی را ببینید
             </a>
             <a className="btn btn--ghost" href={LINKS.technicalGuideUrl}>
               راهنمای فنی
