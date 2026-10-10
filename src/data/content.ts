@@ -15,10 +15,10 @@ export const PRODUCT = {
 
 // PLACEHOLDER: replace with the real download and docs URLs before launch.
 // Empty string means the download button renders as "به‌زودی" and is disabled.
-// downloadUrl: direct link to the final static-site package (GitHub Release asset).
+// downloadUrl: direct link to the final static-site package committed under downloads/.
 // pluginDownloadUrl: AvandWP plugin zip — empty until the plugin release is shared.
 export const LINKS = {
-  downloadUrl: 'https://github.com/Masoumiofficial/avandwp-site/releases/download/v1.0.0/avandwp-landing-v1.0.0.zip',
+  downloadUrl: 'https://github.com/Masoumiofficial/avandwp-site/raw/arena/86ec640b-avandwp-site/downloads/avandwp-landing-v1.0.0.zip',
   pluginDownloadUrl: '',
   docsUrl: 'https://github.com/Masoumiofficial/avandwp-site#readme',
   statusUrl: 'https://github.com/Masoumiofficial/avandwp-site/releases',
