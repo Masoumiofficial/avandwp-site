@@ -13,17 +13,16 @@ export const PRODUCT = {
     'نگارش مقالات سئوشده با تصویر شاخص و پادکست صوتی، اسکن و بهینه‌سازی دسته‌ای محصولات ووکامرس، چت‌بات پاسخ‌گو متصل به پایگاه دانش سایت با صندوق تیکت کارشناس، و انتشار خودکار در تلگرام — مستقیماً در پیشخوان وردپرس با صف پردازش پس‌زمینه.',
 };
 
-// PLACEHOLDER: replace with the real download and docs URLs before launch.
-// Empty string means the download button renders as "به‌زودی" and is disabled.
-// downloadUrl: direct link to the final static-site package committed under downloads/.
-// pluginDownloadUrl: AvandWP plugin zip — empty until the plugin release is shared.
+// Sales channel: every purchase CTA points to the Rastchin product page.
+// Empty until that page exists; until then the CTAs scroll to the pricing section.
+export const RASTCHIN_PRODUCT_URL = '';
+
+// PLACEHOLDER: docs, status and technical-guide URLs still need the real addresses before launch.
 export const LINKS = {
-  downloadUrl: 'https://github.com/Masoumiofficial/avandwp-site/raw/arena/86ec640b-avandwp-site/downloads/avandwp-landing-v1.0.0.zip',
-  pluginDownloadUrl: '',
   docsUrl: 'https://github.com/Masoumiofficial/avandwp-site#readme',
   statusUrl: 'https://github.com/Masoumiofficial/avandwp-site/releases',
   technicalGuideUrl: 'https://github.com/Masoumiofficial/avandwp-site#readme',
-  purchaseUrl: '#pricing',
+  purchaseUrl: RASTCHIN_PRODUCT_URL || '#pricing',
 };
 
 // PLACEHOLDER: set to true only after prices are approved.

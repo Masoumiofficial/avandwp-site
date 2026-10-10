@@ -1,9 +1,8 @@
-import { DownloadSimple } from '@phosphor-icons/react';
-import { LINKS, NAV_ITEMS, PRODUCT } from '../data/content';
+import { LINKS, NAV_ITEMS, PRODUCT, RASTCHIN_PRODUCT_URL } from '../data/content';
 import { Logo } from './Logo';
 
 export function Footer() {
-  const downloadReady = Boolean(LINKS.downloadUrl);
+  const purchaseLabel = RASTCHIN_PRODUCT_URL ? 'خرید افزونه در راست‌چین' : 'مشاهده‌ی قیمت‌ها';
   return (
     <footer className="site-footer" data-scene="network">
       <div className="container">
@@ -51,21 +50,12 @@ export function Footer() {
           </div>
 
           <div>
-            <h4>دانلود</h4>
-            {downloadReady ? (
-              <a className="btn btn--primary btn--sm" href={LINKS.downloadUrl} download>
-                <DownloadSimple size={16} aria-hidden="true" /> بسته‌ی نهایی سایت (ZIP)
-              </a>
-            ) : (
-              <span className="btn btn--ghost btn--sm" aria-disabled="true">
-                لینک دانلود به‌زودی
-              </span>
-            )}
+            <h4>خرید</h4>
+            <a className="btn btn--primary btn--sm" href={LINKS.purchaseUrl}>
+              {purchaseLabel}
+            </a>
             <p style={{ fontSize: '0.82rem', marginTop: 12 }}>
-              نسخه‌ی استاتیک این صفحه؛ قابل آپلود روی هر هاست استاتیک.
-            </p>
-            <p style={{ fontSize: '0.82rem', marginTop: 6 }}>
-              فایل افزونه avandwp-v{PRODUCT.version}.zip: {LINKS.pluginDownloadUrl ? <a href={LINKS.pluginDownloadUrl}>دانلود</a> : 'به‌زودی'}
+              فروش افزونه‌ی AvandWP از طریق فروشگاه راست‌چین.
             </p>
           </div>
         </div>

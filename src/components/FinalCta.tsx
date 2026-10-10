@@ -1,9 +1,9 @@
-import { ArrowRight, DownloadSimple } from '@phosphor-icons/react';
-import { LINKS, PRODUCT } from '../data/content';
+import { ArrowRight } from '@phosphor-icons/react';
+import { LINKS, PRODUCT, RASTCHIN_PRODUCT_URL } from '../data/content';
 
 // Closing call-to-action (Hero + Features + CTA pattern from the design system).
 export function FinalCta() {
-  const downloadReady = Boolean(LINKS.downloadUrl);
+  const purchaseLabel = RASTCHIN_PRODUCT_URL ? 'خرید افزونه' : 'مشاهده‌ی قیمت‌ها';
   return (
     <section className="final-cta" data-scene="burst" aria-labelledby="cta-title">
       <div className="container final-cta__inner">
@@ -15,17 +15,8 @@ export function FinalCta() {
         </div>
         <div className="final-cta__actions">
           <a className="btn btn--primary" href={LINKS.purchaseUrl}>
-            دریافت لایسنس آوند <ArrowRight size={16} aria-hidden="true" />
+            {purchaseLabel} <ArrowRight size={16} aria-hidden="true" />
           </a>
-          {downloadReady ? (
-            <a className="btn btn--ghost" href={LINKS.downloadUrl} download>
-              <DownloadSimple size={16} aria-hidden="true" /> دانلود بسته‌ی سایت
-            </a>
-          ) : (
-            <span className="btn btn--ghost" aria-disabled="true">
-              دانلود به‌زودی
-            </span>
-          )}
         </div>
       </div>
     </section>
