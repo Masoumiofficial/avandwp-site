@@ -52,8 +52,8 @@ export function Footer() {
           <div>
             <h4>دانلود</h4>
             {downloadReady ? (
-              <a className="btn btn--primary btn--sm" href={LINKS.downloadUrl}>
-                ⬇ دانلود avandwp-v{PRODUCT.version}.zip
+              <a className="btn btn--primary btn--sm" href={LINKS.downloadUrl} download>
+                ⬇ بسته‌ی نهایی سایت (ZIP)
               </a>
             ) : (
               <span className="btn btn--ghost btn--sm" aria-disabled="true">
@@ -61,7 +61,10 @@ export function Footer() {
               </span>
             )}
             <p style={{ fontSize: '0.82rem', marginTop: 12 }}>
-              نصب مستقیم از پیشخوان وردپرس؛ ساخت خودکار ۸ جدول استاندارد.
+              نسخه‌ی استاتیک این صفحه؛ قابل آپلود روی هر هاست استاتیک.
+            </p>
+            <p style={{ fontSize: '0.82rem', marginTop: 6 }}>
+              فایل افزونه avandwp-v{PRODUCT.version}.zip: {LINKS.pluginDownloadUrl ? <a href={LINKS.pluginDownloadUrl}>دانلود</a> : 'به‌زودی'}
             </p>
           </div>
         </div>

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { LINKS, NAV_ITEMS, PRODUCT } from '../data/content';
 import { Logo } from './Logo';
+import { ThemeToggle } from './ThemeToggle';
 
 export function Header() {
   const [open, setOpen] = useState(false);
@@ -33,6 +34,7 @@ export function Header() {
         </nav>
 
         <div className="header-actions">
+          <ThemeToggle />
           <a className="btn btn--ghost btn--sm" href={LINKS.technicalGuideUrl}>
             راهنمای فنی
           </a>

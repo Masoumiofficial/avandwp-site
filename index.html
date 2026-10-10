@@ -11,6 +11,14 @@
     <meta property="og:type" content="website" />
   </head>
   <body>
+    <script>
+      // Apply the saved theme before first paint to avoid a flash of the wrong palette.
+      (function () {
+        var t = 'dark';
+        try { t = localStorage.getItem('avand-theme') === 'light' ? 'light' : 'dark'; } catch (e) {}
+        document.documentElement.dataset.theme = t;
+      })();
+    </script>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
