@@ -19,7 +19,7 @@ function PillarCard({ p }: { p: (typeof PILLARS)[number] }) {
 
 export function Pillars() {
   return (
-    <section className="section" id="pillars" aria-labelledby="pillars-title" style={{ background: 'var(--avand-bg-light)' }}>
+    <section className="section section--tint" id="pillars" aria-labelledby="pillars-title">
       <div className="container">
         <SectionHead
           eyebrow="FOUR PILLARS"

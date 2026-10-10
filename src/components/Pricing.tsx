@@ -11,7 +11,7 @@ export function Pricing() {
   const [currency, setCurrency] = useState<Currency>('toman');
 
   return (
-    <section className="section" id="pricing" aria-labelledby="pricing-title" style={{ background: 'var(--avand-bg-light)' }}>
+    <section className="section section--tint" id="pricing" aria-labelledby="pricing-title">
       <div className="container">
         <SectionHead
           eyebrow="LICENSE TIERS"

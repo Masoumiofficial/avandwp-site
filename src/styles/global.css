@@ -607,3 +607,40 @@ main:focus { outline: none; }
   .brand .badge { display: none; }
   .header-actions { flex: none; gap: 6px; }
 }
+
+/* ---------- Site-wide 3D backdrop (SiteScene) ----------
+   The canvas sits at z-index -1: it paints above the body colour and below every section.
+   Sections are therefore translucent so the scene shows through; cards stay opaque for legibility. */
+.site-scene {
+  position: fixed; inset: 0; width: 100vw; height: 100vh; z-index: -1; pointer-events: none; display: block;
+}
+.section--tint { background: color-mix(in srgb, var(--avand-bg-light) 80%, transparent); }
+.section--dark { background: color-mix(in srgb, var(--c-bg-dark) 80%, transparent); }
+.section--white { background: color-mix(in srgb, var(--avand-surface-light) 82%, transparent); }
+.hero { background: radial-gradient(1000px 500px at 80% -10%, var(--c-hero-glow), transparent 60%),
+    radial-gradient(800px 500px at 0% 110%, var(--c-hero-glow-2), transparent 60%),
+    color-mix(in srgb, var(--c-bg-dark) 60%, transparent) !important; }
+[data-theme='light'] .hero { background: radial-gradient(1000px 500px at 80% -10%, var(--c-hero-glow), transparent 60%),
+    radial-gradient(800px 500px at 0% 110%, var(--c-hero-glow-2), transparent 60%),
+    color-mix(in srgb, #eef4fb 60%, transparent) !important; }
+.site-footer { background: color-mix(in srgb, var(--c-footer-bg) 88%, transparent); }
+
+/* 3D entrance for sections: only applied when JS has confirmed motion is allowed (html.motion-ok). */
+html.motion-ok main > section:not(.hero) {
+  opacity: 0;
+  transform: perspective(1400px) rotateX(7deg) translate3d(0, 40px, 0);
+  transform-origin: 50% 0;
+  transition: opacity 0.8s ease, transform 0.9s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+html.motion-ok main > section.is-revealed { opacity: 1; transform: none; }
+html.motion-ok .site-footer {
+  opacity: 0; transform: perspective(1400px) rotateX(-4deg) translate3d(0, 28px, 0);
+  transition: opacity 0.8s ease, transform 0.9s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+html.motion-ok .site-footer.is-revealed { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) {
+  html.motion-ok main > section, html.motion-ok .site-footer { opacity: 1 !important; transform: none !important; transition: none !important; }
+}
+/* Perspective-projected sections can project wider than the viewport on narrow screens; clip that horizontally. */
+html.motion-ok main, html.motion-ok .site-footer { overflow-x: clip; }
+html.motion-ok #root { overflow-x: clip; }

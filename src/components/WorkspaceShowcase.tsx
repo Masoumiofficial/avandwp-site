@@ -79,7 +79,7 @@ export function WorkspaceShowcase() {
   const tilt = useTilt<HTMLDivElement>(4);
 
   return (
-    <section className="section" id="workspaces" aria-labelledby="ws-title" style={{ background: 'var(--avand-bg-light)' }}>
+    <section className="section section--tint" id="workspaces" aria-labelledby="ws-title">
       <div className="container">
         <SectionHead
           eyebrow="6 WORKSPACES"

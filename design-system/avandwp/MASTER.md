@@ -275,3 +275,4 @@ These overrides take precedence over the generated defaults above. They were cho
 - **Card tilt:** `useTilt` hook (`src/hooks/useTilt.ts`) on pillar cards and the workspace mock. Disabled for touch, `hover: none`, and reduced motion.
 - **Honesty:** the simulator, chat console, and ticket form are scripted demos and are labelled as such. Mockups use sample data.
 - **Dials:** variance 4, motion 3, density 5.
+- **Site-wide 3D:** `src/components/SiteScene.tsx` is a fixed, non-interactive Three.js backdrop (z-index -1) with a fogged perspective grid, wireframe shapes, and particles. Scroll flies the camera through it; the pointer adds parallax. Sections are translucent so it shows through, and cards stay opaque for legibility. It is lazy-loaded and renders one static frame under reduced motion. Sections also rise into place in 3D on scroll (`useSectionReveal`); this is gated on `html.motion-ok`, so content is visible without JS or under reduced motion.

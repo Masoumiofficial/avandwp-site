@@ -1,3 +1,4 @@
+import { lazy, Suspense } from 'react';
 import { BrandStory } from './components/BrandStory';
 import { ChatConsole } from './components/ChatConsole';
 import { Comparison } from './components/Comparison';
@@ -14,11 +15,19 @@ import { Security } from './components/Security';
 import { Setup } from './components/Setup';
 import { WorkflowSimulator } from './components/WorkflowSimulator';
 import { WorkspaceShowcase } from './components/WorkspaceShowcase';
+import { useSectionReveal } from './hooks/useSectionReveal';
+
+// Three.js backdrop is code-split; the page renders fully without it.
+const SiteScene = lazy(() => import('./components/SiteScene').then((m) => ({ default: m.SiteScene })));
 
 // Section order follows the 14-section brief.
 export default function App() {
+  useSectionReveal();
   return (
     <>
+      <Suspense fallback={null}>
+        <SiteScene />
+      </Suspense>
       <a className="skip-link" href="#main">
         پرش به محتوای اصلی
       </a>
